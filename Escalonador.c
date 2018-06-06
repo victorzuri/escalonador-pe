@@ -106,6 +106,11 @@ void executarFCFS(Escalonador* e){
 	system("PAUSE");	
 }
 
+void executarRoundRobin(Escalonador* e) {
+	printf("\nExecutando Round Robin\n");
+	system("PAUSE");
+}
+
 /*Carregar em memória todos os processo lidos do arquivo - para serem escalonados*/
 Escalonador* carregarProcessos(){
 	FILE *arqProcessos;

@@ -1,0 +1,5 @@
+Escalonador.exe
+Escalonador.o
+FilaVetor.o
+main.o
+Makefile.win
