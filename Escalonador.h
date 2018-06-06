@@ -32,11 +32,12 @@ void executarFCFS(Escalonador* e);
 
 /* 
 <<Nome>>: executarRoundRobin 
-<<Objetivo>>: ????			  
-<<Entrada>> : ????
-<<Saída>>   : ????
+<<Objetivo>>: alterar			  
+<<Entrada>> : alterar
+<<Saída>>   : alterar
 */
 void executarRoundRobin(Escalonador * e);
+
 /* 
 <<Nome>>: executarSJF 
 <<Objetivo>>: ????			  

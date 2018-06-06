@@ -58,8 +58,10 @@ int main(int argc, char *argv[]) {
 			case 9:	{				
 				break;
 			}
-			default:
-				break;
+			default: {
+				return 0;
+			}
+				
 		}
 		
 	}while(opcao!=9);

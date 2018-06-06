@@ -106,6 +106,7 @@ void executarFCFS(Escalonador* e){
 	system("PAUSE");	
 }
 
+/*Executar a estatégia de escolanomento - Round Robin*/
 void executarRoundRobin(Escalonador* e) {
 	printf("\nExecutando Round Robin\n");
 	system("PAUSE");
