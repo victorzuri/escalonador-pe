@@ -106,6 +106,40 @@ void executarFCFS(Escalonador* e){
 	system("PAUSE");	
 }
 
+/*Executar a estatégia de escolanomento - Round Robin*/
+void executarRoundRobin(Escalonador* e) {
+	
+	/*
+	1 - Setar variáveis
+	2 - Importar processos em uma fila
+	3 - Executar escalonador
+		3.1 - Verificar tempo quantum
+		3.2 - Decrescer duracao do atual processo do tempo quantum
+		3.3 - Deslocar processo para o final da fila
+		3.4 - Verificar se ainda existem processos na fila
+		3.5 - Executar o proximo processo ou terminar
+	4 - Imprimir tempo medio de espera e de execução
+	5 - Gravar Log
+	*/
+	
+	printf("\nExecutando Round Robin\n");
+	int i;
+	int clock = 0;
+	float tMedioEspera = 0;
+	float tMedioExec = 0;
+	
+	// Criar fila de processos
+	Fila * filaProcessos = cria();
+	for(i = 0; i < e->totalProcessos; i++){
+		insere(filaProcessos, e->processos[i].pid);
+	}
+	imprime(filaProcessos);
+	
+	vazia(filaProcessos) ? printf("Fila vazia") : printf("Processos na fila:\n");
+	
+	system("PAUSE");
+}
+
 /*Carregar em memória todos os processo lidos do arquivo - para serem escalonados*/
 Escalonador* carregarProcessos(){
 	FILE *arqProcessos;
