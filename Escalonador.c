@@ -32,7 +32,7 @@ void imprimirProcessos(Escalonador *e){
 	system("PAUSE");	
 }
 
-/*Setar as configurações do escalonador*/
+/*Setar as configuraÃ§Ãµes do escalonador*/
 void setarConfiguracoes(Escalonador* e){
 	char trace,delay;
 	system("CLS");
@@ -54,7 +54,7 @@ void setarConfiguracoes(Escalonador* e){
 	system("PAUSE");
 }
 
-/*Função auxiliar - Gravar no arquivo de Logs todos os escalonementos executados*/
+/*FunÃ§Ã£o auxiliar - Gravar no arquivo de Logs todos os escalonementos executados*/
 void gravarLog(char*estrategia,float tMedioExec, float tMedioEspera){
 	
 	FILE *arqLog;
@@ -75,7 +75,7 @@ void gravarLog(char*estrategia,float tMedioExec, float tMedioEspera){
 	fclose(arqLog);	
 }
 
-/*Executar a estatégia de escolanomento - FCFS*/
+/*Executar a estatÃ©gia de escolanomento - FCFS*/
 void executarFCFS(Escalonador* e){
 	int i;
 	int clock = 0;
@@ -101,16 +101,16 @@ void executarFCFS(Escalonador* e){
 	tMedioEspera = tMedioEspera / e->totalProcessos;
 	tMedioExec = tMedioExec / e->totalProcessos;
 	printf("\n\nTempo medio de espera: %f - Tempo medio de execucao: %f\n\n", tMedioEspera, tMedioExec);	
-	/*Gravar dados da execução no arquivo LOG*/
+	/*Gravar dados da execuÃ§Ã£o no arquivo LOG*/
 	gravarLog("FCFS",tMedioExec,tMedioEspera);	
 	system("PAUSE");	
 }
 
-/*Executar a estatégia de escolanomento - Round Robin*/
+/*Executar a estatÃ©gia de escolanomento - Round Robin*/
 void executarRoundRobin(Escalonador* e) {
 	
 	/*
-	1 - Setar variáveis
+	1 - Setar variÃ¡veis
 	2 - Importar processos em uma fila
 	3 - Executar escalonador
 		3.1 - Verificar tempo quantum
@@ -118,7 +118,7 @@ void executarRoundRobin(Escalonador* e) {
 		3.3 - Deslocar processo para o final da fila
 		3.4 - Verificar se ainda existem processos na fila
 		3.5 - Executar o proximo processo ou terminar
-	4 - Imprimir tempo medio de espera e de execução
+	4 - Imprimir tempo medio de espera e de execuÃ§Ã£o
 	5 - Gravar Log
 	*/
 	
@@ -137,10 +137,72 @@ void executarRoundRobin(Escalonador* e) {
 	
 	vazia(filaProcessos) ? printf("Fila vazia") : printf("Processos na fila:\n");
 	
+	e->processos[0].tempoRemanescente = e->processos[0].duracao;
+	e->processos[1].tempoRemanescente = e->processos[1].duracao;
+	e->processos[2].tempoRemanescente = e->processos[2].duracao;
+							
+	do{
+		
+		//Caso a entrada do processo A for menor que B e C
+		
+		if(e->processos[0].tempoRemanescente > 0){
+		
+		if(e->processos[0].entrada<e->processos[1].entrada && e->processos[0].entrada<e->processos[2].entrada){
+			
+			e->processos[0].tempoRemanescente -=e->quantum;
+						
+			if(e->processos[0].tempoRemanescente < 0){
+				tMediaExec += e->processos[0].tempoRemanescente + e->quantum;
+				e->processos[0].tempoRemanescente = 0;
+			}
+			else{
+				tMediaExec += e->quantum;
+			}
+			}
+			printf("Tempo remanescente em A %d\n", e->processos[0].tempoRemanescente);
+			system("PAUSE");
+		}
+			// Caso a entrada de B senha menor que C
+			if(e->processos[1].tempoRemanescente > 0 ){			
+				if(e->processos[1].entrada<e->processos[2].entrada){
+				
+				e->processos[1].tempoRemanescente -=e->quantum;
+						
+			if(e->processos[1].tempoRemanescente < 0){
+				tMediaExec += e->processos[1].tempoRemanescente + e->quantum;
+				e->processos[1].tempoRemanescente = 0;
+			}
+			else{
+				tMediaExec += e->quantum;
+			}
+			}
+			printf("Tempo remanescente em B %d\n", e->processos[1].tempoRemanescente);
+			system("PAUSE");
+		}
+			if(e->processos[2].tempoRemanescente > 0){
+			
+				e->processos[2].tempoRemanescente -=e->quantum;
+						
+			if(e->processos[2].tempoRemanescente < 0){
+				tMediaExec += e->processos[2].tempoRemanescente + e->quantum;
+				e->processos[2].tempoRemanescente = 0;
+			}
+			else{
+				tMediaExec += e->quantum;
+			}
+			printf("Tempo remanescente em C %d\n", e->processos[2].tempoRemanescente);
+			system("PAUSE");
+		}		
+				
+}while(e->processos[0].tempoRemanescente > 0 || e->processos[1].tempoRemanescente > 0 || e->processos[2].tempoRemanescente > 0);	
+		printf("%d", tMediaExec);
+		system("PAUSE");
+
+}		
 	system("PAUSE");
 }
 
-/*Carregar em memória todos os processo lidos do arquivo - para serem escalonados*/
+/*Carregar em memÃ³ria todos os processo lidos do arquivo - para serem escalonados*/
 Escalonador* carregarProcessos(){
 	FILE *arqProcessos;
 	arqProcessos = fopen("processos.txt","r");	
